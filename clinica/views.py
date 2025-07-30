@@ -114,7 +114,7 @@ def agendamento_list(request):
 @csrf_exempt
 @login_required
 @check_perfil(['ATENDENTE', 'PROFESSOR', 'COORDENADOR'])
-
+@permission_required('clinica.add_agendamento', raise_exception=True)
 def agendamento_create(request):
     if request.method == 'POST':
         form = AgendamentoForm(request.POST)           # Cria formulário com dados do POST
@@ -204,3 +204,16 @@ def prontuario_create(request):
     else:
         form = ProntuarioForm()
     return render(request, 'prontuarios/prontuario_form.html', {'form': form})
+
+
+@login_required
+#@permission_required('clinica.add_agendamento', raise_exception=True)
+def agendamento_calendario(request):
+    agendamentos = Agendamento.objects.all()
+    return render(request, 'agendamento_calendario.html', {'agendamentos': agendamentos})
+
+@login_required
+@permission_required('clinica.add_agendamento', raise_exception=True)
+def agendamento_api(request):
+    agendamentos = Agendamento.objects.all().values('id', 'paciente__nome', 'medico__username', 'data', 'status')
+    return JsonResponse(list(agendamentos), safe=False)

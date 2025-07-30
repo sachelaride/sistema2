@@ -45,6 +45,18 @@ MIDDLEWARE = [
 # Configuração de URLs
 ROOT_URLCONF = 'sistema_clinicas.urls'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sistema_clinicas',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
+
 # Configuração de Templates
 TEMPLATES = [
     {
@@ -73,9 +85,9 @@ STATICFILES_DIR = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'clinica_db',
-        'USER': 'clinica_user',
-        'PASSWORD': 'lizard1240king', # Use a senha que você definiu
+        'NAME': 'sistema_clinicas',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres', # Use a senha que você definiu
         'HOST': 'localhost',         # Ou o IP do seu servidor de banco de dados
         'PORT': '5432',                  # Deixe vazio para a porta padrão (5432)
     }

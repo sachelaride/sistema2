@@ -21,4 +21,6 @@ urlpatterns = [
     path('documentos/new/', views.documento_create, name='documento_create'),
     path('prontuarios/', views.prontuario_list, name='prontuario_list'),
     path('prontuarios/new/', views.prontuario_create, name='prontuario_create'),
+    path('agendamentos/calendario/', views.agendamento_calendario, name='agendamento_calendario'),
+    path('agendamentos/api/', views.agendamento_api, name='agendamento_api'),
 ]
