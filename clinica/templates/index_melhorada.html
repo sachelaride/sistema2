@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}Sistema de Clínicas - Página Inicial{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Sistema de Clínicas</h1>
+            
+            {% if user.is_authenticated %}
+                <div class="alert alert-info">
+                    <strong>Bem-vindo, {{ user.username }}!</strong><br>
+                    Perfil: {{ user.get_perfil_display }}<br>
+                    Clínica: {{ user.clinica.nome|default:"Não definida" }}
+                </div>
+                
+                <div class="row">
+                    <!-- Card de Agendamentos -->
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">Agendamentos</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Gerencie agendamentos com calendário interativo</p>
+                                <a href="{% url 'clinica:agendamento_calendario' %}" class="btn btn-primary btn-sm">Calendário</a>
+                                <a href="{% url 'clinica:agendamento_list_melhorada' %}" class="btn btn-outline-primary btn-sm">Lista</a>
+                                <a href="{% url 'clinica:agendamento_create_melhorada' %}" class="btn btn-success btn-sm">Novo</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card de Pacientes -->
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="card-title mb-0">Pacientes</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Cadastro e gestão de pacientes da clínica</p>
+                                <a href="{% url 'clinica:paciente_list_melhorada' %}" class="btn btn-success btn-sm">Listar</a>
+                                <a href="{% url 'clinica:paciente_create_melhorada' %}" class="btn btn-outline-success btn-sm">Novo</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card de Prontuários -->
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-header bg-warning text-dark">
+                                <h5 class="card-title mb-0">Prontuários</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Gestão de prontuários e documentos</p>
+                                <a href="{% url 'clinica:prontuario_list_melhorada' %}" class="btn btn-warning btn-sm">Listar</a>
+                                <a href="{% url 'clinica:prontuario_create_melhorada' %}" class="btn btn-outline-warning btn-sm">Novo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Funcionalidades por Perfil -->
+                {% if user.perfil == 'COORDENADOR' %}
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h3>Funcionalidades de Coordenador</h3>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="card-title mb-0">Usuários</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Gestão de usuários da clínica</p>
+                                <a href="{% url 'clinica:user_list' %}" class="btn btn-info btn-sm">Listar</a>
+                                <a href="{% url 'clinica:user_create' %}" class="btn btn-outline-info btn-sm">Novo</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header bg-secondary text-white">
+                                <h5 class="card-title mb-0">Clínicas</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Gestão de clínicas</p>
+                                <a href="{% url 'clinica:clinica_list' %}" class="btn btn-secondary btn-sm">Listar</a>
+                                <a href="{% url 'clinica:clinica_create' %}" class="btn btn-outline-secondary btn-sm">Nova</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Funcionalidades Gerais -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h3>Outras Funcionalidades</h3>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-header bg-dark text-white">
+                                <h5 class="card-title mb-0">Atendimentos</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Gestão de atendimentos</p>
+                                <a href="{% url 'clinica:atendimento_list' %}" class="btn btn-dark btn-sm">Listar</a>
+                                <a href="{% url 'clinica:atendimento_create' %}" class="btn btn-outline-dark btn-sm">Novo</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-header bg-danger text-white">
+                                <h5 class="card-title mb-0">Documentos</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Upload e gestão de documentos</p>
+                                <a href="{% url 'clinica:documento_list' %}" class="btn btn-danger btn-sm">Listar</a>
+                                <a href="{% url 'clinica:documento_create' %}" class="btn btn-outline-danger btn-sm">Novo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            {% else %}
+                <div class="alert alert-warning">
+                    <h4>Acesso Restrito</h4>
+                    <p>Você precisa fazer login para acessar o sistema.</p>
+                    <a href="{% url 'clinica:login' %}" class="btn btn-primary">Fazer Login</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
